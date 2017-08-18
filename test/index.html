@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Esmr Test</title>
+	<script src="/esmr.js"></script>
+</head>
+<body>
+	<script>
+		Esmr(['./say', './say-more'], function (error, Say, SayMore) {
+			if (error) throw error;
+			Say('word!!');
+			SayMore('word again');
+		});
+	</script>
+</body>
+</html>

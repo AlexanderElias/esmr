@@ -1,0 +1,28 @@
+{
+  "name": "esmr",
+  "version": "1.0.0",
+  "description": "esmr",
+  "main": "dist/esmr.js",
+  "scripts": {
+	  "w": "muleify pack -w src/esmr.b.js dist/esmr.js",
+	  "b": "muleify pack src/esmr.b.js dist/esmr.js",
+	  "bm": "muleify pack -m src/esmr.b.js dist/esmr.min.js",
+	  "ba": "npm run b && npm run bm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexanderElias/esmr.git"
+  },
+  "keywords": [
+    "esm",
+    "es",
+    "module",
+    "loader"
+  ],
+  "author": "Alexander Elias",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/AlexanderElias/esmr/issues"
+  },
+  "homepage": "https://github.com/AlexanderElias/esmr#readme"
+}
