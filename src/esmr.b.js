@@ -13,30 +13,39 @@ if (typeof window === 'undefined') {
 	Cwd = Cwd + window.location.pathname + '/';
 }
 
-function toModule (text) {
-	text = text.match(/(export default)|/);
-	text = text.replace('export default', 'return');
-	text = '(function(){\n\t\'use strict\';\n' + text + '\n}());';
-	return {
-		name: ,
-		module: eval(text)
-	};
-};
+function toCode (data) {
+	'use strict';
+	// data = data.match(/(export default)|/);
+	if (data.indexOf('export default') !== -1) {
+		data = data.replace('export default', 'return');
+	}
+	data = '(function(){\n\t\'use strict\';\n' + data + '\n}());';
+	return eval.call(null, data);
+}
 
 function getAsync (path, callback) {
 	Fs.readFile(path, function (error, data) {
 		if (error) {
 			callback(error);
 		} else {
-			callback(null, Modules[path] = convert(data));
+			callback(
+				null,
+				Modules[path] = {
+					path: path,
+					code: toCode(data)
+				}
+			);
 		}
 	});
 }
 
 function getSync (path) {
 	var data = Fs.readFileSync(path, 'UTF8');
-	return convert(data);
-};
+	return Modules[path] = {
+		path: path,
+		code: toCode(data)
+	};
+}
 
 function getHandler (path, callback) {
 	path = path.slice(-3) === '.js' ? path : path + '.js';
@@ -51,7 +60,7 @@ function getHandler (path, callback) {
 	} else if (callback) {
 		getAsync(path, callback);
 	} else {
-		return Modules[path] = getSync(path);
+		return getSync(path);
 	}
 }
 
@@ -63,4 +72,4 @@ export default function Esmr (path, callback) {
 	} else {
 		return getHandler(path, callback);
 	}
-};
+}
